@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText emailTextView, passwordTextView;
+    private EditText emailTextView, passwordTextView,ConfirmPasswordTextView;
     private Button Btn;
     private ProgressBar progressbar;
     private FirebaseAuth mAuth;
@@ -35,6 +35,7 @@ public class SignupActivity extends AppCompatActivity {
         // initialising all views through id defined above
         emailTextView = findViewById(R.id.emailTxt);
         passwordTextView = findViewById(R.id.passwordTxt);
+        ConfirmPasswordTextView = findViewById(R.id.ConfirmPasswordTxt);
         Btn = findViewById(R.id.LoginBtn);
         progressbar = findViewById(R.id.progressbar);
 
@@ -56,16 +57,17 @@ public class SignupActivity extends AppCompatActivity {
         progressbar.setVisibility(View.VISIBLE);
 
         // Take the value of two edit texts in Strings
-        String email, password;
-        email = emailTextView.getText().toString();
-        password = passwordTextView.getText().toString();
-
+        String email, password, second_password;
+        email = emailTextView.getText().toString().trim();
+        password = passwordTextView.getText().toString().trim();
+        second_password = ConfirmPasswordTextView.getText().toString().trim();
         // Validations for input email and password
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
                             "Please enter email!!",
                             Toast.LENGTH_LONG)
                     .show();
+            progressbar.setVisibility(View.GONE);
             return;
         }
         if (TextUtils.isEmpty(password)) {
@@ -73,7 +75,17 @@ public class SignupActivity extends AppCompatActivity {
                             "Please enter password!!",
                             Toast.LENGTH_LONG)
                     .show();
+            progressbar.setVisibility(View.GONE);
             return;
+        }else{
+            if (!password.equals(second_password)){
+                Toast.makeText(getApplicationContext(),
+                                "Las contraseñas no coinciden.",
+                                Toast.LENGTH_LONG)
+                        .show();
+                progressbar.setVisibility(View.GONE);
+                return;
+            }
         }
 
         // create new user or register new user
@@ -86,7 +98,7 @@ public class SignupActivity extends AppCompatActivity {
                     {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
-                                            "Registration successful!",
+                                            "Bienvenido!!",
                                             Toast.LENGTH_LONG)
                                     .show();
 
@@ -104,8 +116,7 @@ public class SignupActivity extends AppCompatActivity {
                             // Registration failed
                             Toast.makeText(
                                             getApplicationContext(),
-                                            "Registration failed!!"
-                                                    + " Please try again later",
+                                            "Error al registrarse. Intente de nuevo.",
                                             Toast.LENGTH_LONG)
                                     .show();
 

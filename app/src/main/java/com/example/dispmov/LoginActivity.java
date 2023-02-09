@@ -69,8 +69,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // Take the value of two edit texts in Strings
         String email, password;
-        email = emailTextView.getText().toString();
-        password = passwordTextView.getText().toString();
+        email = emailTextView.getText().toString().trim();
+        password = passwordTextView.getText().toString().trim();
 
         // Validations for input email and password
         if (TextUtils.isEmpty(email)) {
@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                             "Please enter email!!",
                             Toast.LENGTH_LONG)
                     .show();
+            progressbar.setVisibility(View.GONE);
             return;
         }
         if (TextUtils.isEmpty(password)) {
@@ -85,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                             "Please enter password!!",
                             Toast.LENGTH_LONG)
                     .show();
+            progressbar.setVisibility(View.GONE);
             return;
         }
 
@@ -96,13 +98,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task< AuthResult > task)
             {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Successfully Logged In", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Logeado Exitosamente", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LoginActivity.this,
                             MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error al logearse", Toast.LENGTH_LONG).show();
+                    progressbar.setVisibility(View.GONE);
                 }
             }
         });

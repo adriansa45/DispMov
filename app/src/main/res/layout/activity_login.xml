@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email..."
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName|textEmailAddress" />
 
         <EditText
             android:id="@+id/passwordTxt"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Contraseña..."
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName|textPassword" />
 
         <Button
             android:id="@+id/LoginBtn"
