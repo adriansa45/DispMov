@@ -1,11 +1,14 @@
 package com.example.dispmov;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,18 +31,14 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-
-        // taking FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance();
 
-        // initialising all views through id defined above
         emailTextView = findViewById(R.id.emailTxt);
         passwordTextView = findViewById(R.id.passwordTxt);
         ConfirmPasswordTextView = findViewById(R.id.ConfirmPasswordTxt);
         Btn = findViewById(R.id.LoginBtn);
         progressbar = findViewById(R.id.progressbar);
 
-        // Set on Click Listener on Registration button
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -53,18 +52,15 @@ public class SignupActivity extends AppCompatActivity {
     private void registerNewUser()
     {
 
-        // show the visibility of progress bar to show loading
         progressbar.setVisibility(View.VISIBLE);
 
-        // Take the value of two edit texts in Strings
         String email, password, second_password;
         email = emailTextView.getText().toString().trim();
         password = passwordTextView.getText().toString().trim();
         second_password = ConfirmPasswordTextView.getText().toString().trim();
-        // Validations for input email and password
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
-                            "Please enter email!!",
+                            "Ingresa un correo!!",
                             Toast.LENGTH_LONG)
                     .show();
             progressbar.setVisibility(View.GONE);
@@ -72,7 +68,7 @@ public class SignupActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(),
-                            "Please enter password!!",
+                            "Ingresa una contreseña!!",
                             Toast.LENGTH_LONG)
                     .show();
             progressbar.setVisibility(View.GONE);
@@ -88,7 +84,6 @@ public class SignupActivity extends AppCompatActivity {
             }
         }
 
-        // create new user or register new user
         mAuth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -97,30 +92,42 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task)
                     {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),
-                                            "Bienvenido!!",
-                                            Toast.LENGTH_LONG)
-                                    .show();
 
-                            // hide the progress bar
-                            progressbar.setVisibility(View.GONE);
+                            mAuth.getCurrentUser().sendEmailVerification()
+                                .addOnCompleteListener(task1 -> {
+                                    if(task1.isSuccessful()){
+                                        Toast.makeText(getApplicationContext(),
+                                                        "Correo de verificación enviado",
+                                                        Toast.LENGTH_LONG)
+                                                .show();
 
-                            // if the user created intent to login activity
-                            Intent intent
-                                    = new Intent(SignupActivity.this,
-                                    MainActivity.class);
-                            startActivity(intent);
+                                        progressbar.setVisibility(View.GONE);
+
+                                        Intent intent
+                                                = new Intent(SignupActivity.this,
+                                                MainActivity.class);
+                                        startActivity(intent);
+                                    }else{
+                                        Toast.makeText(
+                                                        getApplicationContext(),
+                                                        "Error al registrarse. Intente de nuevo.",
+                                                        Toast.LENGTH_LONG)
+                                                .show();
+
+                                        progressbar.setVisibility(View.GONE);
+                                    }
+                                });
+
+
                         }
                         else {
 
-                            // Registration failed
                             Toast.makeText(
                                             getApplicationContext(),
                                             "Error al registrarse. Intente de nuevo.",
                                             Toast.LENGTH_LONG)
                                     .show();
 
-                            // hide the progress bar
                             progressbar.setVisibility(View.GONE);
                         }
                     }

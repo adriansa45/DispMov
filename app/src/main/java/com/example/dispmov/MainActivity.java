@@ -32,9 +32,19 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         if(mAuth.getCurrentUser() == null){
+
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
+        } else if (!mAuth.getCurrentUser().isEmailVerified()) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getApplicationContext(),
+                            "Usuario sin autenticar.",
+                            Toast.LENGTH_LONG)
+                    .show();
+            mAuth.signOut();
         }
 
         BtnLogOut.setOnClickListener(new View.OnClickListener() {

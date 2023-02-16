@@ -64,15 +64,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoginUser(){
-        // show the visibility of progress bar to show loading
         progressbar.setVisibility(View.VISIBLE);
 
-        // Take the value of two edit texts in Strings
         String email, password;
         email = emailTextView.getText().toString().trim();
         password = passwordTextView.getText().toString().trim();
 
-        // Validations for input email and password
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
                             "Please enter email!!",
@@ -98,11 +95,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task< AuthResult > task)
             {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Logeado Exitosamente", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this,
-                            MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if(mAuth.getCurrentUser().isEmailVerified()){
+                        Toast.makeText(getApplicationContext(), "Logeado Exitosamente", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(LoginActivity.this,
+                                MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Verificación de correo pendiente", Toast.LENGTH_LONG).show();
+                    }
+                    progressbar.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getApplicationContext(), "Error al logearse", Toast.LENGTH_LONG).show();
                     progressbar.setVisibility(View.GONE);
