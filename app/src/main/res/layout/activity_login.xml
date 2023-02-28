@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Email..."
+            android:hint="@string/emailtxt"
             android:inputType="textPersonName|textEmailAddress" />
 
         <EditText
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Contraseña..."
+            android:hint="@string/passwordtxt"
             android:inputType="textPersonName|textPassword" />
 
         <Button
@@ -56,4 +56,12 @@
             android:visibility="gone" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/lenguageBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/changelenguage"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="671dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

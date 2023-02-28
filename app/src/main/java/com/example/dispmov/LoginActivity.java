@@ -1,9 +1,12 @@
 package com.example.dispmov;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,11 +20,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Locale;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailTextView, passwordTextView;
-    private Button BtnLogin, BtnNewAccount;
+    private Button BtnLogin, BtnNewAccount, BtnLenguage;
     private ProgressBar progressbar;
+    private Locale locale;
+    private Configuration config = new Configuration();
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordTextView = findViewById(R.id.passwordTxt);
         BtnLogin = findViewById(R.id.LoginBtn);
         BtnNewAccount = findViewById(R.id.CreateBtn);
+        BtnLenguage = findViewById(R.id.lenguageBtn);
         progressbar = findViewById(R.id.progressbar);
 
 
@@ -61,7 +69,42 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+        BtnLenguage.setOnClickListener(
+                view -> showDialog());
     }
+
+    private void showDialog(){
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+        //obtiene los idiomas del array de string.xml
+        //String[] types = getResources().getStringArray(R.array.);
+        String[] types = {"Español","Inglés"};
+        b.setItems(types, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+                switch(which){
+                    case 0:
+                        locale = new Locale("es");
+                        break;
+                    case 1:
+                        locale = new Locale("en");
+                        break;
+                }
+                config.setLocale(locale);
+                getResources().updateConfiguration(config, null);
+                Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
+                startActivity(refresh);
+                finish();
+            }
+
+        });
+
+        b.show();
+    }
+
 
     private void LoginUser(){
         progressbar.setVisibility(View.VISIBLE);
@@ -72,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
-                            "Please enter email!!",
+                            getResources().getString(R.string.EmpyEmail),
                             Toast.LENGTH_LONG)
                     .show();
             progressbar.setVisibility(View.GONE);
@@ -80,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(),
-                            "Please enter password!!",
+                            getResources().getString(R.string.EmpyPassword),
                             Toast.LENGTH_LONG)
                     .show();
             progressbar.setVisibility(View.GONE);
@@ -96,17 +139,17 @@ public class LoginActivity extends AppCompatActivity {
             {
                 if (task.isSuccessful()) {
                     if(mAuth.getCurrentUser().isEmailVerified()){
-                        Toast.makeText(getApplicationContext(), "Logeado Exitosamente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.welcome), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoginActivity.this,
                                 MainActivity.class);
                         startActivity(intent);
                         finish();
                     }else{
-                        Toast.makeText(getApplicationContext(), "Verificación de correo pendiente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.PendingEmail), Toast.LENGTH_LONG).show();
                     }
                     progressbar.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error al logearse", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.Error), Toast.LENGTH_LONG).show();
                     progressbar.setVisibility(View.GONE);
                 }
             }

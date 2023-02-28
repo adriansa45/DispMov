@@ -60,7 +60,7 @@ public class SignupActivity extends AppCompatActivity {
         second_password = ConfirmPasswordTextView.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),
-                            "Ingresa un correo!!",
+                            getResources().getString(R.string.EmpyEmail),
                             Toast.LENGTH_LONG)
                     .show();
             progressbar.setVisibility(View.GONE);
@@ -68,7 +68,7 @@ public class SignupActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(),
-                            "Ingresa una contreseña!!",
+                            getResources().getString(R.string.EmpyPassword),
                             Toast.LENGTH_LONG)
                     .show();
             progressbar.setVisibility(View.GONE);
@@ -76,7 +76,7 @@ public class SignupActivity extends AppCompatActivity {
         }else{
             if (!password.equals(second_password)){
                 Toast.makeText(getApplicationContext(),
-                                "Las contraseñas no coinciden.",
+                                getResources().getString(R.string.PasswordMatching),
                                 Toast.LENGTH_LONG)
                         .show();
                 progressbar.setVisibility(View.GONE);
@@ -97,7 +97,7 @@ public class SignupActivity extends AppCompatActivity {
                                 .addOnCompleteListener(task1 -> {
                                     if(task1.isSuccessful()){
                                         Toast.makeText(getApplicationContext(),
-                                                        "Correo de verificación enviado",
+                                                        getResources().getString(R.string.EmailSended),
                                                         Toast.LENGTH_LONG)
                                                 .show();
 
@@ -110,7 +110,7 @@ public class SignupActivity extends AppCompatActivity {
                                     }else{
                                         Toast.makeText(
                                                         getApplicationContext(),
-                                                        "Error al registrarse. Intente de nuevo.",
+                                                        getResources().getString(R.string.Error),
                                                         Toast.LENGTH_LONG)
                                                 .show();
 
@@ -124,7 +124,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             Toast.makeText(
                                             getApplicationContext(),
-                                            "Error al registrarse. Intente de nuevo.",
+                                            getResources().getString(R.string.Error),
                                             Toast.LENGTH_LONG)
                                     .show();
 
