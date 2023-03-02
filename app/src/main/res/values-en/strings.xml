@@ -24,4 +24,9 @@
     <string name="EmpyPassword">Write a valid password</string>
     <string name="PendingEmail">Email verification is pending</string>
     <string name="PasswordMatching">Passwords not matching</string>
+    <string name="Bye">Bye!!</string>
+    <string-array name="roles">
+        <item>Admin</item>
+        <item>User</item>
+    </string-array>
 </resources>

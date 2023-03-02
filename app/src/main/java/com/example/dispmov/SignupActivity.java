@@ -13,12 +13,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -26,6 +34,7 @@ public class SignupActivity extends AppCompatActivity {
     private Button Btn;
     private ProgressBar progressbar;
     private FirebaseAuth mAuth;
+    private Spinner mySpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +42,8 @@ public class SignupActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+
+        mySpinner = (Spinner) findViewById(R.id.spinner);
         emailTextView = findViewById(R.id.emailTxt);
         passwordTextView = findViewById(R.id.passwordTxt);
         ConfirmPasswordTextView = findViewById(R.id.ConfirmPasswordTxt);
@@ -92,6 +103,26 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task)
                     {
                         if (task.isSuccessful()) {
+                            String rol = mySpinner.getSelectedItem().toString();
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("email", email);
+                            user.put("rol", rol);
+
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("users")
+                                    .add(user)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.Error),Toast.LENGTH_LONG).show();
+                                        }
+                                    });
 
                             mAuth.getCurrentUser().sendEmailVerification()
                                 .addOnCompleteListener(task1 -> {
@@ -101,21 +132,16 @@ public class SignupActivity extends AppCompatActivity {
                                                         Toast.LENGTH_LONG)
                                                 .show();
 
-                                        progressbar.setVisibility(View.GONE);
+
+
+
 
                                         Intent intent
                                                 = new Intent(SignupActivity.this,
                                                 MainActivity.class);
                                         startActivity(intent);
-                                    }else{
-                                        Toast.makeText(
-                                                        getApplicationContext(),
-                                                        getResources().getString(R.string.Error),
-                                                        Toast.LENGTH_LONG)
-                                                .show();
-
-                                        progressbar.setVisibility(View.GONE);
                                     }
+                                    progressbar.setVisibility(View.GONE);
                                 });
 
 

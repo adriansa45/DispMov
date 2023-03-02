@@ -24,4 +24,9 @@
     <string name="EmpyPassword">El campo contraseña esta vacio</string>
     <string name="PendingEmail">La verificación de correo esta pendiente</string>
     <string name="PasswordMatching">Las contraseñas no coinciden.</string>
+    <string name="Bye">Adios!!</string>
+    <string-array name="roles">
+        <item>Administrador</item>
+        <item>Usuario</item>
+    </string-array>
 </resources>

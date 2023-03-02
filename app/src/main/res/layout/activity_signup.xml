@@ -43,6 +43,13 @@
             android:hint="@string/confirmpasswordtxt"
             android:inputType="textPassword" />
 
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/roles" />
+
         <Button
             android:id="@+id/LoginBtn"
             android:layout_width="match_parent"
@@ -54,5 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

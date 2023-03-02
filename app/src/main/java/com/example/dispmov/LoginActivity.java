@@ -19,8 +19,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-
         // initialising all views through id defined above
         emailTextView = findViewById(R.id.emailTxt);
         passwordTextView = findViewById(R.id.passwordTxt);
