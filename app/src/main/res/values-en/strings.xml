@@ -29,4 +29,7 @@
         <item>Admin</item>
         <item>User</item>
     </string-array>
+    <string name="title_activity_main_admin">MainActivityAdmin</string>
+    <string name="title_activity_main_user">MainActivityUser</string>
+    <string name="title_activity_main_dev">MainActivityDev</string>
 </resources>

@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         if(mAuth.getCurrentUser() != null){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivityDev.class);
             startActivity(intent);
             finish();
         }
@@ -78,14 +78,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showDialog(){
         AlertDialog.Builder b = new AlertDialog.Builder(this);
-        //obtiene los idiomas del array de string.xml
-        //String[] types = getResources().getStringArray(R.array.);
+        //String[] types = getResources().getStringArray(R.array.language);
         String[] types = {"Español","Inglés"};
         b.setItems(types, new DialogInterface.OnClickListener() {
-
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 dialog.dismiss();
                 switch(which){
                     case 0:
@@ -101,9 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(refresh);
                 finish();
             }
-
         });
-
         b.show();
     }
 

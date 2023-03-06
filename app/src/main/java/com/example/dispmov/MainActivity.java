@@ -79,7 +79,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         db.collection("users")
+                .whereEqualTo("email", mAuth.getCurrentUser().getEmail())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -89,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 String rol = document.getData().get("rol").toString();
                                 if(document.getData().get("email").toString().equals(mAuth.getCurrentUser().getEmail()))
-                                rolTxt.setText(rol);
+                                    rolTxt.setText(rol);
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(),
-                                            getResources().getString(R.string.Error),
-                                            Toast.LENGTH_LONG)
-                                    .show();
+                            mAuth.signOut();
+                            Intent intent = new Intent(MainActivity.this,
+                                    LoginActivity.class);
+                            startActivity(intent);
                         }
                     }
                 });
