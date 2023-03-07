@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     private Locale locale;
     private Configuration config = new Configuration();
     private FirebaseAuth mAuth;
-
     private FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,9 +142,8 @@ public class LoginActivity extends AppCompatActivity {
             {
                 if (task.isSuccessful()) {
                     if(mAuth.getCurrentUser().isEmailVerified()){
-
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.welcome), Toast.LENGTH_LONG).show();
                         db = FirebaseFirestore.getInstance();
-
                         db.collection("users")
                                 .whereEqualTo("email", mAuth.getCurrentUser().getEmail())
                                 .get()
@@ -156,20 +154,22 @@ public class LoginActivity extends AppCompatActivity {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                                 String rol = document.getData().get("rol").toString();
-                                                if(rol.equals("dev")){
-                                                    Intent intent = new Intent(LoginActivity.this,
-                                                            MainActivityDev.class);
-                                                    startActivity(intent);
-                                                }else if (rol.equals("admin")){
-                                                    Intent intent = new Intent(LoginActivity.this,
-                                                            MainActivityAdmin.class);
-                                                    startActivity(intent);
-                                                }else{
-                                                    Intent intent = new Intent(LoginActivity.this,
-                                                            MainActivityUser.class);
-                                                    startActivity(intent);
+                                                Intent intent;
+                                                switch (rol){
+                                                    case "dev":
+                                                        intent = new Intent(LoginActivity.this,
+                                                                MainActivityDev.class);
+                                                        break;
+                                                    case "admin":
+                                                        intent = new Intent(LoginActivity.this,
+                                                                MainActivityAdmin.class);
+                                                        break;
+                                                    default:
+                                                        intent = new Intent(LoginActivity.this,
+                                                                MainActivityUser.class);
+                                                        break;
                                                 }
-
+                                                startActivity(intent);
                                             }
                                         } else {
                                             mAuth.signOut();
@@ -179,13 +179,6 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-
-
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.welcome), Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        finish();
                     }else{
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.PendingEmail), Toast.LENGTH_LONG).show();
                     }

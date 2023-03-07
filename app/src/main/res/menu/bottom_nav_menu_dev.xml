@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_dev_account"
+        android:id="@+id/navigation_dev_accounts"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/dev_tittle_accounts" />
 

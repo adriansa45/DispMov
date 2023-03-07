@@ -33,4 +33,7 @@
     <string name="title_activity_main_user">MainActivityUser</string>
     <string name="title_activity_main_dev">MainActivityDev</string>
     <string name="tittle_dev_trxs">Trxs</string>
+    <string name="dev_tittle_accounts">Usuarios</string>
+    <string name="title_admin_trxs">Trxs</string>
+    <string name="title_admin_balances">Balances</string>
 </resources>
