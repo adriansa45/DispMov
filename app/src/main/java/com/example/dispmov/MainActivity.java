@@ -91,8 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 String rol = document.getData().get("rol").toString();
-                                if(document.getData().get("email").toString().equals(mAuth.getCurrentUser().getEmail()))
-                                    rolTxt.setText(rol);
+                                rolTxt.setText(rol);
                             }
                         } else {
                             mAuth.signOut();

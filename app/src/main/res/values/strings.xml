@@ -34,4 +34,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_main_user">MainActivityUser</string>
     <string name="title_activity_main_dev">MainActivityDev</string>
+    <string name="dev_tittle_accounts">Accounts</string>
+    <string name="tittle_dev_trxs">Trxs</string>
 </resources>

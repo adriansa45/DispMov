@@ -23,11 +23,11 @@
             android:label="@string/title_activity_main_dev" />
         <activity
             android:name=".MainActivityUser"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_main_user" />
         <activity
             android:name=".MainActivityAdmin"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_main_admin" />
         <activity
             android:name=".ForgotPasswordActivity"

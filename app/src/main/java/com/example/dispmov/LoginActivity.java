@@ -1,5 +1,7 @@
 package com.example.dispmov;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -33,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private Locale locale;
     private Configuration config = new Configuration();
     private FirebaseAuth mAuth;
+
+    private FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +143,44 @@ public class LoginActivity extends AppCompatActivity {
             {
                 if (task.isSuccessful()) {
                     if(mAuth.getCurrentUser().isEmailVerified()){
+
+                        db = FirebaseFirestore.getInstance();
+
+                        db.collection("users")
+                                .whereEqualTo("email", mAuth.getCurrentUser().getEmail())
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                                String rol = document.getData().get("rol").toString();
+                                                if(rol.equals("dev")){
+                                                    Intent intent = new Intent(LoginActivity.this,
+                                                            MainActivityDev.class);
+                                                    startActivity(intent);
+                                                }else if (rol.equals("admin")){
+                                                    Intent intent = new Intent(LoginActivity.this,
+                                                            MainActivityAdmin.class);
+                                                    startActivity(intent);
+                                                }else{
+                                                    Intent intent = new Intent(LoginActivity.this,
+                                                            MainActivityUser.class);
+                                                    startActivity(intent);
+                                                }
+
+                                            }
+                                        } else {
+                                            mAuth.signOut();
+                                            Intent intent = new Intent(LoginActivity.this,
+                                                    LoginActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+
+
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.welcome), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoginActivity.this,
                                 MainActivity.class);
