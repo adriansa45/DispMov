@@ -36,4 +36,11 @@
     <string name="dev_tittle_accounts">Accounts</string>
     <string name="title_admin_trxs">Trxs</string>
     <string name="title_admin_balances">balances</string>
+    <string name="tittle_user_home">Home</string>
+    <string name="title_user_account">account</string>
+    <string name="BtnNewAdmin">New Admin</string>
+    <string name="UserBalance">Balamce</string>
+    <string name="UserBtnNewOrder">New Order</string>
+    <string name="btnSend">Send</string>
+    <string name="placeholderMsg">message...</string>
 </resources>

@@ -36,6 +36,15 @@
     <string name="title_activity_main_dev">MainActivityDev</string>
     <string name="dev_tittle_accounts">Accounts</string>
     <string name="tittle_dev_trxs">Trxs</string>
-    <string name="title_admin_trxs" >Trxs</string>
+    <string name="title_admin_trxs">Trxs</string>
     <string name="title_admin_balances">balances</string>
+    <string name="tittle_user_home">Home</string>
+    <string name="title_user_account">account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="BtnNewAdmin">New Admin</string>
+    <string name="UserBalance">Balamce</string>
+    <string name="UserBtnNewOrder">New Order</string>
+    <string name="btnSend">Send</string>
+    <string name="placeholderMsg">message...</string>
 </resources>

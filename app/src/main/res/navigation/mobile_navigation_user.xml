@@ -2,17 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation">
-
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/fragmentUserHome">
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.dispmov.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_admin_balances" />
-
-    <fragment
-        android:id="@+id/navigation_user_account"
-        android:name="com.example.dispmov.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:id="@+id/fragmentUserAccount"
+        android:name="com.example.dispmov.ui.user.FragmentUserAccount"
+        android:label="fragment_user_account"
         tools:layout="@layout/fragment_user_account" />
+    <fragment
+        android:id="@+id/fragmentUserHome"
+        android:name="com.example.dispmov.ui.user.FragmentUserHome"
+        android:label="fragment_user_home"
+        tools:layout="@layout/fragment_user_home" />
 </navigation>

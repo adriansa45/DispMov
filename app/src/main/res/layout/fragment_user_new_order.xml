@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.FragmentAdminBalances">
+    tools:context=".ui.user.FragmentUserNewOrder">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,15 +21,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/DevBtnNewAdmin"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:text="@string/BtnNewAdmin"
-                android:textSize="34sp" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent"></LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

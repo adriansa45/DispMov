@@ -3,18 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation_dev"
-    app:startDestination="@+id/navigation_account">
-
+    app:startDestination="@id/fragmentDevAccounts">
     <fragment
-        android:id="@+id/navigation_account"
-        android:name="com.example.dispmov.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_user_home" />
-
+        android:id="@+id/fragmentDevAccounts"
+        android:name="com.example.dispmov.ui.dev.FragmentDevAccounts"
+        android:label="fragment_dev_accounts"
+        tools:layout="@layout/fragment_dev_accounts" />
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.dispmov.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_admin_balances" />
-
+        android:id="@+id/fragmentDevTrxs"
+        android:name="com.example.dispmov.ui.dev.FragmentDevTrxs"
+        android:label="fragment_dev_trxs"
+        tools:layout="@layout/fragment_dev_trxs" />
 </navigation>

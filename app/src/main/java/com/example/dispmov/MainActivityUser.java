@@ -30,7 +30,7 @@ public class MainActivityUser extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_dev_accounts, R.id.navigation_dev_trxs, R.id.navigation_user_account)
+                R.id.navigation_user_home,R.id.navigation_user_account)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main_user);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
