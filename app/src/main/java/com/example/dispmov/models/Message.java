@@ -30,4 +30,12 @@ public class Message {
         this.name = name;
     }
 
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.name = hour;
+    }
+
 }

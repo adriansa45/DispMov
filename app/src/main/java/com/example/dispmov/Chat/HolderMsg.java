@@ -38,11 +38,11 @@ public class HolderMsg  extends RecyclerView.ViewHolder{
         this.msg = msg;
     }
 
-    public TextView getHora() {
+    public TextView getHour() {
         return hour;
     }
 
-    public void setHora(TextView hour) {
+    public void setHour(TextView hour) {
         this.hour = hour;
     }
 

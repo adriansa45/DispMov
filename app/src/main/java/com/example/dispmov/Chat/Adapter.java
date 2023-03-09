@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dispmov.R;
 import com.example.dispmov.models.Message;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<HolderMsg>{
@@ -39,6 +41,9 @@ public class Adapter extends RecyclerView.Adapter<HolderMsg>{
     public void onBindViewHolder(@NonNull HolderMsg holder, int position) {
         holder.getName().setText(listMsg.get(position).getName());
         holder.getMsg().setText(listMsg.get(position).getMsg());
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");//a pm o am
+        holder.getHour().setText(sdf.format(d));
     }
 
     @Override

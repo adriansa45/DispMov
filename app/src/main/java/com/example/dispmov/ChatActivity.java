@@ -56,7 +56,7 @@ public class ChatActivity extends AppCompatActivity {
                 Date hour = new Date();
                 String user = auth.getCurrentUser() == null ? "Offline" : auth.getCurrentUser().getEmail().toString();
                 databaseReference.push().setValue(new Message(TxtMsg.getText().toString(),
-                        user, hour.toString()));
+                        user, ServerValue.TIMESTAMP.toString()));
                 TxtMsg.setText("");
             }
         });
