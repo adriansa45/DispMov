@@ -1,9 +1,13 @@
 package com.example.dispmov;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,14 +28,16 @@ import java.util.Date;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private Button BtnSend;
+    private Button BtnSend, BtnVideo;
     private EditText TxtMsg;
     private RecyclerView ListMsg;
     private Adapter adapter;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
-
+    private static final int REQUEST_PERMISSION = 200;
+    private String[] permissions = {android.Manifest.permission.CAMERA,
+            android.Manifest.permission.RECORD_AUDIO};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
         ListMsg = (RecyclerView) findViewById(R.id.listChat);
         TxtMsg = (EditText) findViewById(R.id.chatinput);
         BtnSend = (Button) findViewById(R.id.chatsend);
+        BtnVideo = (Button) findViewById(R.id.videocall);
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -50,14 +57,28 @@ public class ChatActivity extends AppCompatActivity {
         ListMsg.setLayoutManager(l);
         ListMsg.setAdapter(adapter);
 
+        for (String s : permissions){
+            checkPermissions(s);
+        }
+
         BtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Date hour = new Date();
-                String user = auth.getCurrentUser() == null ? "Offline" : auth.getCurrentUser().getEmail().toString();
+                String user = auth.getCurrentUser() == null ? "Offline" : auth.getCurrentUser().getEmail().toString().split("@")[0];
                 databaseReference.push().setValue(new Message(TxtMsg.getText().toString(),
                         user, ServerValue.TIMESTAMP.toString()));
                 TxtMsg.setText("");
+            }
+        });
+
+        BtnVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatActivity.this,
+                        Videocall.class);
+                intent.putExtra("username", auth.getCurrentUser().getEmail().split("@")[0]);
+                startActivity(intent);
             }
         });
 
@@ -74,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message m = dataSnapshot.getValue(Message.class);
-                adapter.addMsg(m);
+                //adapter.addMsg(m);
             }
 
             @Override
@@ -98,6 +119,15 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean checkPermissions(String permission) {
+        int result = ContextCompat.checkSelfPermission(this, permission);
+        if (result != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{permission}, REQUEST_PERMISSION);
+        }
+
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     private void setScrollbar(){

@@ -1,6 +1,7 @@
 package com.example.dispmov.Chat;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import com.example.dispmov.R;
 
 public class HolderMsg  extends RecyclerView.ViewHolder{
 
+    private ImageView img;
     private TextView name;
     private TextView msg;
     private TextView hour;
@@ -19,6 +21,7 @@ public class HolderMsg  extends RecyclerView.ViewHolder{
         name = (TextView) itemView.findViewById(R.id.msgName);
         msg = (TextView) itemView.findViewById(R.id.msgText);
         hour = (TextView) itemView.findViewById(R.id.msgHour);
+        img = (ImageView) itemView.findViewById(R.id.imageView);
     }
 
 
@@ -45,6 +48,12 @@ public class HolderMsg  extends RecyclerView.ViewHolder{
     public void setHour(TextView hour) {
         this.hour = hour;
     }
+    public ImageView getImg() {
+        return img;
+    }
 
+    public void setImg(ImageView img) {
+        this.img = img;
+    }
 
 }

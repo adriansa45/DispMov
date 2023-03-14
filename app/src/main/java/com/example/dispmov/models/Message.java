@@ -1,10 +1,12 @@
 package com.example.dispmov.models;
 
+import com.example.dispmov.Videocall;
+
 public class Message {
     private String msg;
     private String name;
     private String hour;
-
+    public Videocall context;
     public Message() {
     }
 

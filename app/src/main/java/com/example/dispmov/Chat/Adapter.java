@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dispmov.R;
+import com.example.dispmov.Videocall;
 import com.example.dispmov.models.Message;
 
 import java.text.SimpleDateFormat;
@@ -44,6 +45,14 @@ public class Adapter extends RecyclerView.Adapter<HolderMsg>{
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");//a pm o am
         holder.getHour().setText(sdf.format(d));
+        int p = position;
+        holder.getImg().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Videocall context = listMsg.get(p).context;
+                context.sendCallRequest(listMsg.get(p).getName());
+            }
+        });
     }
 
     @Override

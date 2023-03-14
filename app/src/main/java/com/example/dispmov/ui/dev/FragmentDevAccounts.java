@@ -19,6 +19,7 @@ import com.example.dispmov.MainActivity;
 import com.example.dispmov.MainActivityAdmin;
 import com.example.dispmov.MainActivityUser;
 import com.example.dispmov.R;
+import com.example.dispmov.Videocall;
 import com.example.dispmov.ui.admin.FragmentAdminChat;
 
 /**
@@ -99,7 +100,7 @@ public class FragmentDevAccounts extends Fragment {
             public void onClick(View v)
             {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), ChatActivity.class);
+                intent.setClass(getActivity(), Videocall.class);
                 getActivity().startActivity(intent);
             }
         });
